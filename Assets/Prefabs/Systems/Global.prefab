@@ -43,6 +43,38 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1525083269909400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4502190303086210}
+  - component: {fileID: 114973640323696088}
+  m_Layer: 0
+  m_Name: Pools
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1829064399484090
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4181703854642560}
+  - component: {fileID: 114366563125535596}
+  m_Layer: 0
+  m_Name: ProjectilePoolLazer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4161935557931750
 Transform:
   m_ObjectHideFlags: 1
@@ -56,6 +88,19 @@ Transform:
   m_Father: {fileID: 4298798787820922}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4181703854642560
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1829064399484090}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4502190303086210}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4298798787820922
 Transform:
   m_ObjectHideFlags: 1
@@ -67,8 +112,23 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4161935557931750}
+  - {fileID: 4502190303086210}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4502190303086210
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1525083269909400}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4181703854642560}
+  m_Father: {fileID: 4298798787820922}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114328795063227432
 MonoBehaviour:
@@ -82,6 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefabs: {fileID: 114333061431694814}
+  _pools: {fileID: 114973640323696088}
 --- !u!114 &114333061431694814
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -93,5 +154,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 234554cf1910ea44b9905b59b1627bca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectilePrefabs:
-  - {fileID: 114162080755569712, guid: cada938d9b681fe4b8303bdac309d2d6, type: 2}
+  _playerUnitPrefabs:
+  - {fileID: 114664306184034612, guid: c3bc4098370f20547bb80253ab8bea9c, type: 2}
+  - {fileID: 114524915542664362, guid: 787e773cae6c51c4195711f975236501, type: 2}
+  - {fileID: 114257369861850286, guid: 880079990146c2b4db0cd0777cd767fd, type: 2}
+--- !u!114 &114366563125535596
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1829064399484090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77dc5158b9d1d51449bdfd1fb9fb67fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _objectAmount: 50
+  _objectPrefab: {fileID: 114162080755569712, guid: cada938d9b681fe4b8303bdac309d2d6,
+    type: 2}
+  _shouldGrow: 1
+  _projectileType: 1
+--- !u!114 &114973640323696088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1525083269909400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 934c32ffe4b2525499babf2bcc9c8e3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _projectilePools:
+  - {fileID: 114366563125535596}

@@ -1,5 +1,7 @@
 ﻿using System;
+using TAMKShooter.Data;
 using UnityEngine;
+using TAMKShooter.Configs;
 
 namespace TAMKShooter
 {
@@ -13,35 +15,37 @@ namespace TAMKShooter
             Heavy = 3
         }
 
+        [SerializeField]
+        private UnitType _type;
+
+        public UnitType Type
+        {
+            get { return _type; }
+        }
+        public PlayerData Data
+        {
+            get; private set;
+        }
+
         public override int ProjectileLayer
         {
             get
             {
-                return LayerMask.NameToLayer("PlayerProjectile");
+                return LayerMask.NameToLayer(Config.PlayerProjectileLayerName);
             }
+        }
+
+        public void Init(PlayerData playerData)
+        {
+            Data = playerData;
         }
 
         protected override void Die()
         {
             //TODO: Handle dying properly!
             gameObject.SetActive(false);
+            base.Die();
         }
 
-        private void Update()
-        {
-            float inputX = Input.GetAxis("Horizontal");
-            float inputZ = Input.GetAxis("Vertical");
-
-            Vector3 input = new Vector3(inputX, 0, inputZ);
-
-            Mover.MoveToDirection(input);
-
-            bool shoot = Input.GetButton("Shoot");
-            if (shoot)
-            {
-                Weapons.Shoot(ProjectileLayer);
-            }
-  
-        }
     }
 }

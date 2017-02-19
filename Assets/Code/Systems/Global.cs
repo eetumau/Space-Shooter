@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using TAMKShooter.Utility;
 
 namespace TAMKShooter.Systems
 {
@@ -24,11 +25,20 @@ namespace TAMKShooter.Systems
 
         [SerializeField]
         private Prefabs _prefabs;
+        [SerializeField]
+        private Pools _pools;
+
 
         public Prefabs Prefabs
         {
             get { return _prefabs; }
         }
+        public Pools Pools
+        {
+            get { return _pools; }
+        }
+        public GameManager GameManager { get; private set; }
+        public LevelManager LevelManager { get; set; }
 
         protected void Awake()
         {
@@ -48,11 +58,21 @@ namespace TAMKShooter.Systems
 
         private void Init()
         {
+
+            DontDestroyOnLoad(gameObject);
+            
             if(_prefabs == null)
             {
                 _prefabs = GetComponentInChildren<Prefabs>();
             }
 
+            if(_pools == null)
+            {
+                _pools = GetComponentInChildren<Pools>();
+            }
+
+            GameManager = gameObject.GetOrAddComponent<GameManager>();
+            GameManager.Init();
         }
     }
 }

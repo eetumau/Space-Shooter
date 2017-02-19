@@ -1,25 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using ProjectileType = TAMKShooter.Projectile.ProjectileType;
+using UnitType = TAMKShooter.PlayerUnit.UnitType;
 
 namespace TAMKShooter.Systems
 {
     public class Prefabs : MonoBehaviour
     {
-        [SerializeField]
-        private List<Projectile> _projectilePrefabs = new List<Projectile>();
 
-        public Projectile GetProjectilePrefabByType(ProjectileType projectileType)
+        [SerializeField]
+        private PlayerUnit[] _playerUnitPrefabs;
+
+        public PlayerUnit GetPlayerUnitPrefab(UnitType unitType)
         {
-            foreach(Projectile projectile in _projectilePrefabs)
+            PlayerUnit result = null;
+
+            for(int i = 0; i < _playerUnitPrefabs.Length; i++)
             {
-                if(projectile.Type == projectileType)
+                if(_playerUnitPrefabs[i].Type == unitType)
                 {
-                    return projectile;
+                    result = _playerUnitPrefabs[i];
+                    break;
                 }
             }
 
-            return null;
+            return result;
         }
     }
 }

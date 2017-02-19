@@ -215,8 +215,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _projectileType: 1
-  _projectilePrefab: {fileID: 114162080755569712, guid: cada938d9b681fe4b8303bdac309d2d6,
-    type: 2}
 --- !u!114 &114112108274933712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -241,8 +239,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _projectileType: 1
-  _projectilePrefab: {fileID: 114162080755569712, guid: cada938d9b681fe4b8303bdac309d2d6,
-    type: 2}
 --- !u!114 &114345347986798806
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -266,6 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29784b4960db3324f8d0456f82b94f2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 1
 --- !u!114 &114862097332251024
 MonoBehaviour:
   m_ObjectHideFlags: 1
