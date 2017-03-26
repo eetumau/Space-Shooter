@@ -2,6 +2,9 @@
 using TAMKShooter.Data;
 using UnityEngine;
 using TAMKShooter.Configs;
+using TAMKShooter.Systems;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace TAMKShooter
 {
@@ -17,6 +20,9 @@ namespace TAMKShooter
 
         [SerializeField]
         private UnitType _type;
+
+        private float _invulnerabilityTime = 1;
+        public bool _invulnerable;
 
         public UnitType Type
         {
@@ -37,14 +43,53 @@ namespace TAMKShooter
 
         public void Init(PlayerData playerData)
         {
+            InitRequiredComponents();
             Data = playerData;
+            //Homework 2
+            Health.MaxHealth = Health.CurrentHealth;
         }
 
         protected override void Die()
         {
-            //TODO: Handle dying properly!
-            gameObject.SetActive(false);
-            base.Die();
+            //Homework 2
+            if(Data.Lives == 0)
+            {
+                gameObject.SetActive(false);
+                base.Die();
+            }else
+            {
+                Global.Instance.LevelManager.PlayerUnits.InitRespawning(this);
+                Data.Lives -= 1;
+            }
+        }
+
+        //Homework 2
+        public IEnumerator Respawn()
+        {
+            _invulnerable = true;
+            StartCoroutine(Flash());
+
+            yield return new WaitForSeconds(1);
+
+            _invulnerable = false;
+        }
+
+        //Homework 2
+        private IEnumerator Flash()
+        {
+            Renderer rend = GetComponent<Renderer>();
+
+            while (_invulnerable)
+            {
+
+                rend.material.color = Color.clear;
+
+                yield return new WaitForSeconds(0.1f);
+
+                rend.material.color = Color.white;
+
+                yield return new WaitForSeconds(0.1f);
+            }
         }
 
     }

@@ -15,10 +15,6 @@ namespace TAMKShooter
         #endregion
 
         #region Unity messages
-        protected virtual void Awake()
-        {
-            InitRequiredComponents();
-        }
 
 
         #endregion
@@ -37,7 +33,7 @@ namespace TAMKShooter
         public abstract int ProjectileLayer { get; }
         #endregion
 
-        private void InitRequiredComponents()
+        protected void InitRequiredComponents()
         {
             Health = gameObject.GetOrAddComponent<Health>();
             Mover = gameObject.GetOrAddComponent<Mover>();
@@ -56,6 +52,7 @@ namespace TAMKShooter
 
         protected virtual void Die()
         {
+            
             Health.HealthChanged -= HealthChanged;
         }
 

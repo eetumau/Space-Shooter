@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using TAMKShooter.Systems.States;
 using TAMKShooter.Data;
+using TAMKShooter.Level;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace TAMKShooter.Systems
 {
     public class LevelManager : SceneManager
     {
 
+        private ConditionBase[] _conditions;
+        private EnemySpawner[] _enemySpawners;
+        
         public InputManager InputManager
         {
             get; private set;
@@ -32,6 +35,24 @@ namespace TAMKShooter.Systems
             }
         }
 
+        public void ConditionMet(ConditionBase condition)
+        {
+            bool areConditionsMet = true;
+            foreach(ConditionBase c in _conditions)
+            {
+                if (!c.IsConditionMet)
+                {
+                    areConditionsMet = false;
+                    break;
+                }
+            }
+
+            if (areConditionsMet)
+            {
+                (AssociatedState as GameState).LevelCompleted();
+            }
+        }
+
         protected void Awake()
         {
             Initialize();
@@ -39,6 +60,7 @@ namespace TAMKShooter.Systems
 
         private void Initialize()
         {
+            DontDestroyOnLoad(gameObject);
             PlayerUnits = GetComponentInChildren<PlayerUnits>();
             EnemyUnits = GetComponentInChildren<EnemyUnits>();
             InputManager = GetComponentInChildren<InputManager>();
@@ -46,31 +68,46 @@ namespace TAMKShooter.Systems
 
             EnemyUnits.Init();
 
-            PlayerData playerData = new PlayerData()
+            _enemySpawners = GetComponentsInChildren<EnemySpawner>();
+            foreach(var enemySpawner in _enemySpawners)
             {
-                Id = PlayerData.PlayerId.Player1,
-                UnitType = PlayerUnit.UnitType.Heavy,
-                ControllerType = InputManager.ControllerType.Keyboard1,
-                Lives = 3
-            };
+                enemySpawner.Init(EnemyUnits);
+            }
 
-            PlayerData playerData2 = new PlayerData()
+#if UNITY_EDITOR
+            if(Global.Instance.CurrentGameData == null)
             {
-                Id = PlayerData.PlayerId.Player2,
-                UnitType = PlayerUnit.UnitType.Fast,
-                ControllerType = InputManager.ControllerType.Gamepad,
-                Lives = 3
-            };
+                Global.Instance.CurrentGameData = new GameData()
+                {
+                    level = 1,
+                    PlayerDatas = new List<PlayerData>()
+                    {
+                        new PlayerData()
+                        {
+                            ControllerType = InputManager.ControllerType.Keyboard1,
+                            Id = PlayerData.PlayerId.Player1,
+                            Lives = 3,
+                            UnitType = PlayerUnit.UnitType.Balanced
+                        },
 
-            PlayerData playerData3 = new PlayerData()
+                        new PlayerData()
+                        {
+                            ControllerType = InputManager.ControllerType.Keyboard2,
+                            Id = PlayerData.PlayerId.Player2,
+                            Lives = 3,
+                            UnitType = PlayerUnit.UnitType.Fast
+                        }
+                    }
+                };
+            }
+#endif
+            PlayerUnits.Init(Global.Instance.CurrentGameData.PlayerDatas.ToArray());
+
+            _conditions = GetComponentsInChildren<ConditionBase>();
+            foreach(var condition in _conditions)
             {
-                Id = PlayerData.PlayerId.Player3,
-                UnitType = PlayerUnit.UnitType.Balanced,
-                ControllerType = InputManager.ControllerType.Keyboard2,
-                Lives = 3
-            };
-
-            PlayerUnits.Init(playerData, playerData2, playerData3);
+                condition.Init(this);
+            }
         }
     }
 }

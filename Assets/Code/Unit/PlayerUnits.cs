@@ -11,6 +11,10 @@ namespace TAMKShooter
         private Dictionary<PlayerData.PlayerId, PlayerUnit> _players = 
            new Dictionary<PlayerData.PlayerId, PlayerUnit>();
 
+        //Homework 2
+        [SerializeField]
+        private Transform[] _spawnPoints;
+
         public void Init(params PlayerData[] players)
         {
             foreach(PlayerData playerData in players)
@@ -19,7 +23,10 @@ namespace TAMKShooter
                 if(unitPrefab != null)
                 {
                     PlayerUnit unit = Instantiate(unitPrefab, transform);
-                    unit.transform.position = Vector3.zero;
+                    
+                    //Homework 2
+                    unit.transform.position = _spawnPoints[(int)playerData.Id -1].transform.position;
+
                     unit.transform.rotation = Quaternion.identity;
                     unit.Init(playerData);
 
@@ -39,6 +46,19 @@ namespace TAMKShooter
             }                        
         }
 
+        //Homework 2
+        public void InitRespawning(PlayerUnit playerUnit)
+        {
+
+            if(playerUnit.Data.Lives != 0)
+            {
+                playerUnit.Health.CurrentHealth = playerUnit.Health.MaxHealth;
+                playerUnit.transform.position = _spawnPoints[(int)playerUnit.Data.Id - 1].transform.position;
+                playerUnit.transform.rotation = Quaternion.identity;
+
+                StartCoroutine(playerUnit.Respawn());
+            }
+        }
 
     }
 }

@@ -18,5 +18,23 @@ namespace TAMKShooter.Configs
         public const string PlayerProjectileLayerName = "PlayerProjectile";
         public const string EnemyProjectileLayerName = "EnemyProjectile";
 
+        public const string HorizontalName = "Horizontal";
+        public const string VerticalName = "Vertical";
+        public const string ShootName = "Shoot";
+
+        public const string Horizontal2Name = "Horizontal2";
+        public const string Vertical2Name = "Vertical2";
+        public const string Shoot2Name = "Shoot2";
+
+        public const string GP_HorizontalName = "GP_Horizontal";
+        public const string GP_VerticalName = "GP_Vertical";
+        public const string GP_ShootName = "GP_Shoot";
+
+        public const string GP_Horizontal2Name = "GP_Horizontal2";
+        public const string GP_Vertical2Name = "GP_Vertical2";
+        public const string GP_Shoot2Name = "GP_Shoot2";
+
+        public const float DeadZone = 0.3f;
+
     }
 }

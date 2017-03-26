@@ -21,6 +21,8 @@ namespace TAMKShooter
     public interface IHealth
     {
         int CurrentHealth { get; set; }
+        //Homework 2
+        int MaxHealth { get; set; }
         /// <summary>
         /// Reduces health when called.
         /// </summary>

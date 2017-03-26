@@ -24,12 +24,18 @@ namespace TAMKShooter
             }
         }
 
+        //Homework 2
+        public int MaxHealth
+        {
+            get; set;
+        }
+        
+
         public event HealthChangedDelegate HealthChanged;
 
         public bool TakeDamage(int damage)
         {
             CurrentHealth -= damage;
-
             return CurrentHealth == 0;
         }
     }

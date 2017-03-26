@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using TAMKShooter.Utility;
+using TAMKShooter.Data;
+using TAMKShooter.Systems.SaveLoad;
 
 namespace TAMKShooter.Systems
 {
@@ -8,15 +10,18 @@ namespace TAMKShooter.Systems
     {
 
         private static Global _instance;
+        private static bool _isAppClosing = false;
 
         public static Global Instance
         {
             get
             {
-                if(_instance == null)
+                if (_instance == null && !_isAppClosing)
                 {
+
                     GameObject globalObj = new GameObject(typeof(Global).Name);
                     _instance = globalObj.AddComponent<Global>();
+
                 }
 
                 return _instance;
@@ -39,6 +44,8 @@ namespace TAMKShooter.Systems
         }
         public GameManager GameManager { get; private set; }
         public LevelManager LevelManager { get; set; }
+        public GameData CurrentGameData { get; set; }
+        public SaveManager SaveManager { get; private set; }
 
         protected void Awake()
         {
@@ -71,8 +78,17 @@ namespace TAMKShooter.Systems
                 _pools = GetComponentInChildren<Pools>();
             }
 
+            //SaveManager = new SaveManager(new BinaryFormatterSaveLoad<GameData>());
+            SaveManager = new SaveManager(new JSONSaveLoad<GameData>());
+
             GameManager = gameObject.GetOrAddComponent<GameManager>();
             GameManager.Init();
         }
+
+        private void OnApplicationQuit()
+        {
+            _isAppClosing = true;
+        }
+
     }
 }
